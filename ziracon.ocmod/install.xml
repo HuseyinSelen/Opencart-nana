@@ -1,0 +1,1725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<name>ziracon-theme</name>	
+	<code>ziracon-theme</code>	
+    <version>3.x</version>
+    <author>Thementic</author>
+	<!-- admin design layout code start-->
+   <file path="admin/language/en-gb/design/layout.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_column_right']   = 'Column Right';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_column_right']   = 'Column Right';
+
+      $_['text_footer_top']    = 'Footer Top';
+      $_['text_footer_left']    = 'Footer Left';
+      $_['text_footer_right']    = 'Footer Right';
+      $_['text_footer_bottom']    = 'Footer Bottom';
+      $_['text_header_top']    = 'Header Top';
+      $_['text_header_bottom']    = 'Header Bottom';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/language/ar/design/layout.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_column_right']   = 'العمود الأيسر';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_column_right']   = 'العمود الأيسر';
+
+      $_['text_footer_top']    = 'أعلى تذييل';
+      $_['text_footer_left']    = 'تذييل اليسار';
+      $_['text_footer_right']    = 'حق التذييل';
+      $_['text_footer_bottom']    = 'أسفل التذييل';
+      $_['text_header_top']    = 'رأس أعلى';
+      $_['text_header_bottom']    = 'رأس أسفل';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- admin design layout code end-->
+	<file path="admin/view/template/design/layout_form.twig">
+		<operation>
+			<search><![CDATA[
+							<button type="button" onclick="addModule('content-bottom');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+			]]></search>
+			<add position="replace"><![CDATA[
+							<button type="button" onclick="addModule('content-bottom');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+				
+				<table id="module-footer-top" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_footer_top }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %}
+                    {% if layout_module.position == 'footer_top' %}
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            {% if extension.code == layout_module.code %}
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% endif %}
+                            {% else %}
+                            {% for module in extension.module %}
+                            {% if module.code == layout_module.code %}
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                    {% set module_row = module_row + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            <option value=""></option>
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
+                            {% for module in extension.module %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('footer-top');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+				
+				<table id="module-footer-bottom" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_footer_bottom }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %}
+                    {% if layout_module.position == 'footer_bottom' %}
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            {% if extension.code == layout_module.code %}
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% endif %}
+                            {% else %}
+                            {% for module in extension.module %}
+                            {% if module.code == layout_module.code %}
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                    {% set module_row = module_row + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            <option value=""></option>
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
+                            {% for module in extension.module %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('footer-bottom');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+				
+				<table id="module-footer-left" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_footer_left }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %}
+                    {% if layout_module.position == 'footer_left' %}
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            {% if extension.code == layout_module.code %}
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% endif %}
+                            {% else %}
+                            {% for module in extension.module %}
+                            {% if module.code == layout_module.code %}
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                    {% set module_row = module_row + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            <option value=""></option>
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
+                            {% for module in extension.module %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('footer-left');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+				
+				<table id="module-footer-right" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_footer_right }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %}
+                    {% if layout_module.position == 'footer_right' %}
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            {% if extension.code == layout_module.code %}
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% endif %}
+                            {% else %}
+                            {% for module in extension.module %}
+                            {% if module.code == layout_module.code %}
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                    {% set module_row = module_row + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            <option value=""></option>
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
+                            {% for module in extension.module %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('footer-right');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+				
+				
+				
+				<table id="module-header-top" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_header_top }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %}
+                    {% if layout_module.position == 'header_top' %}
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            {% if extension.code == layout_module.code %}
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% endif %}
+                            {% else %}
+                            {% for module in extension.module %}
+                            {% if module.code == layout_module.code %}
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                    {% set module_row = module_row + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            <option value=""></option>
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
+                            {% for module in extension.module %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('header-top');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+				
+				<table id="module-header-bottom" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_header_bottom }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %}
+                    {% if layout_module.position == 'header_bottom' %}
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            {% if extension.code == layout_module.code %}
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% endif %}
+                            {% else %}
+                            {% for module in extension.module %}
+                            {% if module.code == layout_module.code %}
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                    {% set module_row = module_row + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            <option value=""></option>
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
+                            {% for module in extension.module %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('header-bottom');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').delegate('select[name*=\'code\']', 'change', function() {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom, #module-footer-bottom, #module-footer-top, #module-footer-right, #module-footer-left, #module-header-bottom, #module-header-top').delegate('select[name*=\'code\']', 'change', function() {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').trigger('change');
+			]]></search>
+			<add position="replace"><![CDATA[
+			$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom, #module-footer-bottom, #module-footer-top, #module-footer-right, #module-footer-left, #module-header-bottom, #module-header-top').trigger('change');
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/common/footer.php">
+		<operation>
+			<search><![CDATA[
+			$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
+			]]></search>
+			<add position="replace"><![CDATA[
+			$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
+		
+			$data['footer_top'] = $this->load->controller('common/footer_top');
+			$data['footer_bottom'] = $this->load->controller('common/footer_bottom');
+			$data['footer_left'] = $this->load->controller('common/footer_left');
+			$data['footer_right'] = $this->load->controller('common/footer_right');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			return $this->load->view('common/footer', $data);
+			]]></search>
+			<add position="replace"><![CDATA[
+			$data['footer_top'] = $this->load->controller('common/footer_top');
+			$data['footer_bottom'] = $this->load->controller('common/footer_bottom');
+			$data['footer_left'] = $this->load->controller('common/footer_left');
+			$data['footer_right'] = $this->load->controller('common/footer_right');
+			
+			return $this->load->view('common/footer', $data);
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/common/header.php">
+		<operation>
+			<search><![CDATA[
+			$data['name'] = $this->config->get('config_name');
+			]]></search>
+			<add position="replace"><![CDATA[
+			$data['name'] = $this->config->get('config_name');
+			$data['mytemplate'] = $this->config->get('theme_default_directory');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$data['language'] = $this->load->controller('common/language');
+			]]></search>
+			<add position="replace"><![CDATA[
+			$data['return'] = $this->url->link('account/return/add', '', true);
+			$data['sitemap'] = $this->url->link('information/sitemap');
+			$data['affiliate'] = $this->url->link('affiliate/account', '', true);
+			$data['voucher'] = $this->url->link('account/voucher', '', true);
+			$data['manufacturer'] = $this->url->link('product/manufacturer');	
+			
+			$data['language'] = $this->load->controller('common/language');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			return $this->load->view('common/header', $data);
+			]]></search>
+			<add position="replace"><![CDATA[
+			// For page specific css
+		if (isset($this->request->get['route'])) {
+			if (isset($this->request->get['product_id'])) {
+				$class = '-' . $this->request->get['product_id'];
+			} elseif (isset($this->request->get['path'])) {
+				$class = '-' . $this->request->get['path'];
+			} elseif (isset($this->request->get['manufacturer_id'])) {
+				$class = '-' . $this->request->get['manufacturer_id'];
+			} elseif (isset($this->request->get['information_id'])) {
+				$class = '-' . $this->request->get['information_id'];
+			} else {
+				$class = '';
+			}
+
+			$data['class'] = str_replace('/', '-', $this->request->get['route']) . $class;
+			} else {
+				$data['class'] = 'common-home';
+			}
+			
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');	
+			$data['header_top'] = $this->load->controller('common/header_top');	
+			$data['header_bottom'] = $this->load->controller('common/header_bottom');	
+	
+			return $this->load->view('common/header', $data);
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/common/menu.php">
+		<operation>
+			<search><![CDATA[
+			$this->load->model('catalog/product');
+			]]></search>
+			<add position="replace"><![CDATA[
+			$this->load->model('catalog/product');
+			$type="module";
+    	$this->load->model('setting/module');
+		$result=$this->model_setting_module->getModule($type);
+		foreach($result as $result){
+			if($result['code']==="blogger"){
+				$data['blog_enable'] =1;
+			}
+		}
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$categories = $this->model_catalog_category->getCategories(0);
+			]]></search>
+			<add position="replace"><![CDATA[
+			$categories = $this->model_catalog_category->getCategories(0);
+			$data['home'] = $this->url->link('common/home');
+			$data['text_blog'] = $this->language->get('text_blog');
+            $data['all_blogs'] = $this->url->link('information/blogger/blogs');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$children_data[] = array(
+			]]></search>
+			<add position="replace"><![CDATA[
+			$childs_data = array();
+			$child_2 = $this->model_catalog_category->getCategories($child['category_id']);
+
+			foreach ($child_2 as $childs) {
+				$filter_data = array(
+					'filter_category_id'  => $childs['category_id'],
+					'filter_sub_category' => true
+				);
+
+				$childs_data[] = array(
+					'name'  => $childs['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+					'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'] . '_' . $childs['category_id'])
+				);
+			}
+				
+			$children_data[] = array(
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+			]]></search>
+			<add position="replace"><![CDATA[
+			'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+			'childs' => $childs_data,
+			'column'   => $child['column'] ? $child['column'] : 1,
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/extension/module/bestseller.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+				
+						if(isset($images[0]['image']) && !empty($images)){
+						$images = $images[0]['image']; 
+						}else
+						{
+						$images = $image;
+						}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $setting['width'], $setting['height']),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'rating'      => $rating,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			'rating'      => $rating,
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+			'quick'        => $this->url->link('product/quick_view','&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/extension/module/category.php">
+		<operation>
+			<search><![CDATA[
+			public function index() {
+			]]></search>
+			<add position="replace"><![CDATA[
+			public function index($setting) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$this->load->language('extension/module/category');
+			]]></search>
+			<add position="replace"><![CDATA[
+			$this->load->language('extension/module/category');
+			$data['heading_title'] = $this->language->get('heading_title');
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/extension/module/featured.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($product_info['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $setting['width'], $setting['height']),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'rating'      => $rating,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'percentsaving' 	 => round((($product_info['price'] - $product_info['special'])/$product_info['price'])*100, 0),
+			'rating'      => $rating,
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
+			'quick'        => $this->url->link('product/quick_view','&product_id=' . $product_info['product_id'])
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/extension/module/latest.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $setting['width'], $setting['height']),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'rating'      => $rating,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			'rating'      => $rating,
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+			'quick'        => $this->url->link('product/quick_view','&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/extension/module/special.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $setting['width'], $setting['height']),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'rating'      => $rating,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			'rating'      => $rating,
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+			'quick'        => $this->url->link('product/quick_view','&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/category.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height')),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'tax'         => $tax,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'tax'         => $tax,
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+			'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url),
+			'quick'        => $this->url->link('product/quick_view','path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/compare.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($product_info['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'        => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'        => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_height')),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'special'      => $special,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'special'      => $special,
+			'percentsaving' 	 => round((($product_info['price'] - $product_info['special'])/$product_info['price'])*100, 0),
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/manufacturer.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height')),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'tax'         => $tax,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'tax'         => $tax,
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			]]></add>
+		</operation>
+				<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+			'href'        => $this->url->link('product/product', 'manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url),
+			'quick'       => $this->url->link('product/quick_view','manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/product.php">
+		<operation>
+			<search><![CDATA[
+			if ((float)$result['special']) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ((float)$result['special']) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height')),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'tax'         => $tax,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'tax'         => $tax,
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+			'quick'        => $this->url->link('product/quick_view','&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/search.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height')),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'tax'         => $tax,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'tax'         => $tax,
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+			'quick'        => $this->url->link('product/quick_view','&product_id=' . $result['product_id']),
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/special.php">
+		<operation>
+			<search><![CDATA[
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></search>
+			<add position="replace"><![CDATA[
+			$images = $this->model_catalog_product->getProductImages($result['product_id']);
+			if(isset($images[0]['image']) && !empty($images)){
+				$images = $images[0]['image']; 
+			}else{
+				$images = $image;
+			}
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'thumb'       => $image,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'thumb'       => $image,
+			'thumb_swap'  => $this->model_tool_image->resize($images , $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height')),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'tax'         => $tax,
+			]]></search>
+			<add position="replace"><![CDATA[
+			'tax'         => $tax,
+			'percentsaving' 	 => round((($result['price'] - $result['special'])/$result['price'])*100, 0),
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+			'quick'        => $this->url->link('product/quick_view','&product_id=' . $result['product_id']),
+			'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+	</file>
+
+  <!--  Main language block start-->
+  <file path="catalog/language/en-gb/en-gb.php">
+    <operation>
+      <search><![CDATA[
+      $_['button_compare']        = 'Compare this Product';
+      ]]></search>
+      <add position="after"><![CDATA[
+      $_['button_quickview']       = 'Quick view';
+      $_['product_sale_label']     = 'Sale';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/ar.php">
+    <operation>
+      <search><![CDATA[
+      $_['button_compare']        = 'اضافة للمقارنة';
+      ]]></search>
+      <add position="after"><![CDATA[
+      $_['button_quickview']       = 'نظرة سريعة';
+      $_['product_sale_label']     = 'خصم';
+      ]]></add>
+    </operation>
+  </file>
+  <!--  Main language block end-->
+
+    <!-- header cart block start-->
+<file path="catalog/language/en-gb/checkout/cart.php">
+<operation>
+<search><![CDATA[
+$_['text_items']               = '%s item(s) - %s';
+]]></search>
+<add position="replace"><![CDATA[
+$_['text_items']               = '<span class="cart-tot">%s</span><span>(%s)</span>';
+]]></add>
+</operation>
+<operation>
+<search><![CDATA[
+$_['heading_title']            = 'My cart';
+]]></search>
+<add position="replace"><![CDATA[
+$_['heading_title']            = 'cart';
+]]></add>
+</operation>
+</file>
+  <file path="catalog/language/ar/checkout/cart.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_items']       = '%s منتجات - %s';
+      ]]></search>
+      <add position="replace"><![CDATA[
+  $_['text_items']       = '<span class="cart-tot">%s</span><span>(%s)</span>';
+      ]]></add>
+    </operation>
+<operation>
+<search><![CDATA[
+$_['heading_title']            = 'عربة التسوق الخاصة بي';
+]]></search>
+<add position="replace"><![CDATA[
+$_['heading_title']            = 'عربة التسوق';
+]]></add>
+</operation>
+  </file>
+<file path="catalog/language/en-gb/common/cart.php">
+<operation>
+<search><![CDATA[
+$_['text_items']     = '%s item(s) - %s';
+]]></search>
+<add position="replace"><![CDATA[
+$_['text_items']     = '<span class="cart-tot">%s</span><span>(%s)</span>';
+]]></add>
+</operation>
+<operation>
+<search><![CDATA[
+$_['heading_title']  = 'My cart';
+]]></search>
+<add position="replace"><![CDATA[
+$_['heading_title']  = 'cart';
+]]></add>
+</operation>
+</file>
+  <file path="catalog/language/ar/common/cart.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_items']    = '%s منتجات - %s';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_items']     = '<span class="cart-tot">%s</span><span>(%s)</span>';
+      ]]></add>
+    </operation>
+<operation>
+      <search><![CDATA[
+  $_['heading_title']  = 'عربة التسوق الخاصة بي';
+      ]]></search>
+      <add position="replace"><![CDATA[
+  $_['heading_title']  = 'عربة التسوق';
+      ]]></add>
+    </operation>
+   </file>
+   <!-- header cart block end-->
+
+    <!-- main menu  block start-->
+  <file path="catalog/language/en-gb/common/menu.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_all'] = 'Show All';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_all']            = 'Show All';
+      $_['name']                = 'Home';
+      $_['text_affiliate']      = 'Affiliate';
+      $_['text_voucher']        = 'Gift Certificates';
+      $_['text_manufacturer']   = 'Brands';
+      $_['text_return']         = 'Returns';
+      $_['text_sitemap']        = 'Sitemap';
+      $_['text_contactus']      = 'contact us';
+	  $_['text_special']        = 'special';
+	  $_['text_account']        = 'my account';
+      $_['text_blog']           = 'Blogs';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/common/menu.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_all'] = 'عرض الكل';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_all']            = 'عرض الكل';
+	  $_['name']                = 'الصفحة الرئيسية';
+      $_['text_affiliate']      = 'شركة تابعة';
+      $_['text_voucher']        = 'شهادات الهدايا';
+      $_['text_manufacturer']   = 'العلامات التجارية';
+      $_['text_return']         = 'عائدات';
+      $_['text_sitemap']        = 'خريطة الموقع';
+      $_['text_contactus']      = 'اتصل بنا';
+	  $_['text_special']        = 'مميز';
+	  $_['text_account']        = 'حسابي';
+      $_['text_blog']           = 'المدونات';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- main menu block end-->
+  
+  <!-- header  block start-->
+  <file path="catalog/language/en-gb/common/header.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_wishlist']      = 'Wish List (%s)';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_wishlist']      = 'wishlist <span>%s</span>';
+      $_['text_wishlist_title']= 'My wish list';
+      ]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[
+      $_['text_account']       = 'My Account';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_account']       = 'Account';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/common/header.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_wishlist']      = 'قائمة الرغبات (%s)';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_wishlist']      = '<span>%s</span> الأماني';
+      $_['text_wishlist_title']= 'قائمة امنياتي';
+      ]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[
+      $_['text_account']       = 'حسابي';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_account']       = 'الحساب';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- header block end-->
+
+  <!-- Search block start-->
+  <file path="catalog/language/en-gb/common/search.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_search'] = 'Search';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_search'] = 'Search';
+      $_['text_category'] = 'Select categories';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/common/search.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_search'] = 'ابحاث';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_search'] = 'بح';
+      $_['text_category'] = 'حدد الفئات';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Search block end-->
+
+  <!-- account wishlist block start-->
+  <file path="catalog/language/en-gb/account/wishlist.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_wishlist'] = 'Wish List (%s)';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_wishlist']      = 'wishlist <span>%s</span>';
+      $_['text_wishlist_title']= 'My wish list';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/account/wishlist.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_wishlist'] = 'قائمة رغباتك (%s)';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_wishlist']      = 'قائمة الرغبات<span>%s</span>';
+      $_['text_wishlist_title']= 'قائمة امنياتي';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- account wishlist block end-->
+
+  <!-- footer block start-->
+  <file path="catalog/language/en-gb/common/footer.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_powered']      = 'Powered By <a href="http://www.opencart.com">OpenCart</a><br /> %s &copy; %s';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_powered']      = 'Powered By <a href="#">OpenCart</a> %s &copy; %s';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/common/footer.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_powered']      = 'مشغل بواسطة <a href="http://www.opencartarab.com" target="_blank">OpenCartArab</a> | دعـم <a href="http://www.opencart.com" target="_blank">OpenCart</a><br /> %s &copy; %s';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_powered']      = 'مشغل بواسطة <a href="#">OpenCartArab</a> %s &copy; %s';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- footer block end-->
+ 
+  <!-- Search block start-->
+  <file path="catalog/language/en-gb/common/search.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_search'] = 'Search';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_search'] = 'Search';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/common/search.php">
+    <operation>
+      <search><![CDATA[
+      $_['text_search'] = 'بحث';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['text_search'] = 'بحث';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Search block end-->
+
+  <!-- Featured product block start-->
+  <file path="catalog/language/en-gb/extension/module/featured.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'Featured';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'Featured Products';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/featured.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'منتجات مميزة';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'منتجات مميزة';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Featured product block end-->
+
+  <!-- Latest product block start-->
+  <file path="catalog/language/en-gb/extension/module/latest.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'Latest';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'New products';
+      ]]></add>
+    </operation>
+  </file>
+   <file path="catalog/language/ar/extension/module/latest.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'أضيف مؤخراً';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'منتجات جديدة';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Latest product block end-->
+
+  <!-- Bestseller product block start-->
+  <file path="catalog/language/en-gb/extension/module/bestseller.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'Bestsellers';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'Best sellers';
+      ]]></add>
+    </operation>
+  </file>
+ <file path="catalog/language/ar/extension/module/bestseller.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'الأكثر مبيعاً';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'الأفضل مبيعًا';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Bestseller product block end-->
+
+  <!-- Special product block start-->
+  <file path="catalog/language/en-gb/extension/module/special.php">
+    <operation>
+      <search><![CDATA[
+	  $_['heading_title'] = 'deal of the week';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'Deal of the day';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/special.php">
+    <operation>
+      <search><![CDATA[
+	  $_['heading_title'] = 'صفقة الأسبوع';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'صفقة اليوم';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Special product block end-->
+
+  <!-- Blog block start-->
+  <file path="catalog/language/en-gb/extension/module/blogger.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title']    = 'from the Blogs';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'from the Blogs';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/blogger.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title']    = 'من المدونات';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'من المدونات';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Blog block end-->
+
+  <!-- Category tab block start-->
+  <file path="catalog/language/en-gb/extension/module/category_tab.php">
+    <operation>
+      <search><![CDATA[
+      $_['categorytab_heading_title'] = 'Top Categories';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['categorytab_heading_title'] = 'Top categories';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/category_tab.php">
+    <operation>
+      <search><![CDATA[
+      $_['categorytab_heading_title'] = 'أعلى الفئات';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['categorytab_heading_title'] = 'أهم الفئات';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Category tab block end-->
+  
+  <!-- Category list block start-->
+  <file path="catalog/language/en-gb/extension/module/category_list.php">
+    <operation>
+      <search><![CDATA[
+      $_['categorylist_title'] = 'Go quickly to:';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['categorylist_title'] = 'shop by category';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['categorylist_shopnow'] = 'view more';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['categorylist_shopnow'] = 'shop now';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/category_list.php">
+    <operation>
+      <search><![CDATA[
+      $_['categorylist_title'] = 'اذهب بسرعة إلى:';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['categorylist_title'] = 'تسوق حسب الاقسام';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['categorylist_shopnow'] = 'عرض المزيد';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['categorylist_shopnow'] = 'تسوق الآن';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Category list block end-->
+  
+  <!-- vertical category block start-->
+  <file path="catalog/language/en-gb/extension/module/verticalcategory.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'All Categories';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'all categories';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/verticalcategory.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'جميع الفئات';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'جميع الفئات';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- vertical category block end-->
+  
+  <!-- product tab block start-->
+  <file path="catalog/language/en-gb/extension/module/product_tab.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'Top Products';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'Top Products';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_featured'] = 'Featured';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_featured'] = 'featured products';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_latest'] = 'Latest';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_latest'] = 'new arrivals';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_bestseller'] = 'Bestseller';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_bestseller'] = 'best sellers';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_special'] = 'Special';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_special'] = 'special';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/product_tab.php">
+    <operation>
+      <search><![CDATA[
+      $_['heading_title'] = 'أهم المنتجات';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['heading_title'] = 'أهم المنتجات';  
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_featured'] = 'متميز';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_featured'] = 'متميز';  
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_latest'] = 'آخر';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_latest'] = 'آخر';  
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_bestseller'] = 'الأكثر مبيعا';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_bestseller'] = 'الأكثر مبيعا'; 
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['tab_special'] = 'مميز';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['tab_special'] = 'مميز';	  
+      ]]></add>
+    </operation>
+  </file>
+  <!-- product tab block end-->
+
+  <!-- Newsletter block start-->
+  <file path="catalog/language/en-gb/extension/module/newsletter.php">
+    <operation>
+      <search><![CDATA[
+      $_['entry_email']     = 'Enter your e-mail';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['entry_email']     = 'Enter your Mail Id';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['newsletter_title']     = 'our newsletter';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['newsletter_title']     = 'Get Our Latest Updates!';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['newsletter_desc']     = 'We are young and successful model agency from los..';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['newsletter_desc']     = 'You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.';
+      ]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[
+      $_['entry_title']     = 'subscribe to newsletter';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['entry_title'] = 'Subscribe for our newsletter';
+      ]]></add>
+    </operation>
+     <operation>
+      <search><![CDATA[
+      $_['email_button']       = 'subscribe';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['email_button']       = 'Subscribe';
+      ]]></add>
+    </operation>
+  </file>
+  <file path="catalog/language/ar/extension/module/newsletter.php">
+     <operation>
+      <search><![CDATA[
+      $_['entry_email']          = 'أدخل بريدك الإلكتروني';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['entry_email']          = 'أدخل معرف البريد الخاص بك';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['newsletter_title']     = 'نشرتنا الإخبارية';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['newsletter_title']     = 'احصل على آخر التحديثات!';
+      ]]></add>
+    </operation>
+	<operation>
+      <search><![CDATA[
+	  $_['newsletter_desc']     = 'وكالة عارضة أزياء شابة وناجحة من لوس ..';
+      ]]></search>
+      <add position="replace"><![CDATA[
+	  $_['newsletter_desc']     = 'يمكنك إلغاء الاشتراك في أي لحظة. لهذا الغرض ، يرجى العثور على معلومات الاتصال الخاصة بنا في الإشعار القانوني.';
+      ]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[
+      $_['entry_title']     = 'اشترك في النشرة الإخبارية';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['entry_title'] = 'اشترك في النشرة الإخبارية لدينا';
+      ]]></add>
+    </operation>
+     <operation>
+      <search><![CDATA[
+      $_['email_button']       = 'الإشتراك';
+      ]]></search>
+      <add position="replace"><![CDATA[
+      $_['email_button']       = 'الإشتراك';
+      ]]></add>
+    </operation>
+  </file>
+  <!-- Newsletter block end-->
+
+</modification>
