@@ -1,0 +1,26 @@
+# Opencart Config dosyalarını hariç tut
+/config.php
+/admin/config.php
+system/config.php
+
+admin/controller/
+admin/model/ 
+
+config.php.backup
+.env
+.htaccess
+admin/view/template/common/login.tpl
+# Opencart cache dosyalarını hariç tut
+/cache/
+user.php
+
+# Opencart log dosyalarını hariç tut
+/system/storage/logs/
+
+# Opencart'ın yüklediği dosyalar
+/system/storage/uploads/
+
+# Diğer kullanıcıya özel dosyalar
+.env
+*.log
+*.sql
