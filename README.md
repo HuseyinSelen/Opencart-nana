@@ -40,3 +40,7 @@ For any questions or suggestions, feel free to reach out:
 
 If you find this project useful, don't forget to star the repository ⭐
 
+## 📜 License
+This project is licensed under the MIT License.
+
+
